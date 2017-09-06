@@ -1,5 +1,6 @@
 *.gem
 .bundle
+.idea
 pkg/*
 .DS_Store
 **/*/log/*

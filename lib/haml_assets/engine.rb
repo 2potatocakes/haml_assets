@@ -1,16 +1,16 @@
 module HamlAssets
   class Engine < ::Rails::Engine
-    initializer "haml_assets.assets.register", :group => :all do |app|
-      app.config.assets.configure do |sprockets_env|
-        if sprockets_env.respond_to?(:register_transformer)
-          sprockets_env.register_mime_type 'application/vnd.carezone.haml+text', extensions: ['.haml']
-          sprockets_env.register_transformer 'application/vnd.carezone.haml+text', 'application/javascript', HamlSprocketsEngine
+    initializer "sprockets.hamljs", :after => "sprockets.environment", :group => :all do |app|
+      config.assets.configure do |env|
+        if env.respond_to?(:register_transformer)
+          env.register_mime_type 'text/hamljs', extensions: ['.hamljs']
+          env.register_transformer 'text/hamljs', 'application/javascript', ::HamlAssets::HamlSprocketsEngine
         end
 
-        if sprockets_env.respond_to?(:register_engine)
-          args = ['.haml', HamlSprocketsEngine]
-          args << { silence_deprecation: true } if Sprockets::VERSION.start_with?("3")
-          sprockets_env.register_engine(*args)
+        if env.respond_to?(:register_engine)
+          args = ['.hamljs', ::HamlAssets::HamlSprocketsEngine]
+          args << { mime_type: 'text/hamljs', silence_deprecation: true } if Sprockets::VERSION.start_with?('3')
+          env.register_engine(*args)
         end
       end
     end

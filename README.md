@@ -1,3 +1,9 @@
+#Forked gem
+
+This fork is just a hacky attempt at getting the gem to work with Rails 5.
+I changed the file extension to convert `.hamljs` files instead of the previous `.haml` extension
+
+
 # Haml for JavaScript templates with the asset pipeline
 
 Writing JavaScript templates for Backbone.js (or other frameworks) in your app?
